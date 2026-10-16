@@ -4,9 +4,9 @@ Astra-agency 的 KOL 合作和发布进度看板，使用原生 HTML、CSS、Jav
 
 ## 在线网站
 
-当前已部署的站点：https://astra-agency-kol-board.chenjiaxuechen22.chatgpt.site
+GitHub Pages 看板：[打开网站](https://yueee315.github.io/Kol-/)。
 
-该站点保留原有访问权限。GitHub 中的修改不会自动同步至此站点。
+原 Sites 站点：https://astra-agency-kol-board.chenjiaxuechen22.chatgpt.site ，保留原有访问权限；GitHub 中的修改不会自动同步至该 Sites 站点。
 
 ## 功能
 
@@ -24,7 +24,7 @@ Astra-agency 的 KOL 合作和发布进度看板，使用原生 HTML、CSS、Jav
 - `data.js`：Astra-agency 的 8 位 KOL 及合作、排期、脚本和发布信息。
 - `crm-data.js`：达人资产库表头及 6 位匹配达人的资料。Pro AE、Sorin 未匹配。
 - 未填写字段与未匹配记录分别标注；下单价格的币种在源表中未注明。
-- 本仓库包含合作价格、联系方式及内部业务资料，当前保持私有。
+- 本仓库与 GitHub Pages 网站已按所有者确认设为公开。
 
 ## 本地运行
 
@@ -49,9 +49,9 @@ python3 -m http.server 4173 --bind 127.0.0.1
 
 ## GitHub Pages
 
-仓库文件已按静态站点根目录组织。检查仓库 Settings → Pages 的可用性；在当前私有仓库和账户套餐下，GitHub 提示需升级套餐或公开仓库才能启用 Pages，因此本次未启用 GitHub Pages。
+已启用 GitHub Pages，发布来源为 `main` 分支的 `/ (root)`，强制使用 HTTPS。
 
-此静态应用本身不提供登录控制。启用公开托管前，需要先处理业务数据的访问权限；不要将私有仓库直接视为网站访问控制。
+向 `main` 提交更新后，GitHub 会自动重新部署至 https://yueee315.github.io/Kol-/ 。这只更新仓库中的静态网站，不会自动读取飞书最新数据。
 
 ## 更新数据
 
