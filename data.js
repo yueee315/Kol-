@@ -8,3 +8,34 @@ window.ASTRA_DATA = [
 {id:'프로에펙러 Pro AE',account:'https://www.youtube.com/@pro_ae',platforms:['YouTube'],agency:'Youdao MRP',contact:'2026-10-15',script:'',price:null,rights:'',delivered:false,due:'',actual:'',link:''},
 {id:'Sorin',account:'https://www.youtube.com/@sorin_youtube',platforms:['YouTube'],agency:'Youdao MRP',contact:'2026-10-15',script:'',price:null,rights:'',delivered:false,due:'',actual:'',link:''}
 ];
+
+window.ASTRA_METRICS = {
+  "https://www.youtube.com/watch?v=qouD73HSZdw": {
+    "platform": "YouTube",
+    "title": "I Connected GPT-6 Astra to Tripo AI — It Built a Complete 3D Game World",
+    "publishedText": "2026-10-10",
+    "collectedAt": "2026-10-16T17:28:00+08:00",
+    "method": "公开视频页面",
+    "views": 83376,
+    "likes": 2225,
+    "comments": 244,
+    "shares": null,
+    "unavailable": {
+      "shares": "YouTube 公开页面不展示分享次数。"
+    }
+  },
+  "https://www.tiktok.com/@theo_diot/video/7696456507650559265": {
+    "platform": "TikTok",
+    "title": "J’ai créé la moto la PLUS INCROYABLE pour mon pote !",
+    "publishedText": "1 天前（采集时页面显示）",
+    "collectedAt": "2026-10-16T17:28:00+08:00",
+    "method": "公开视频页面",
+    "views": null,
+    "likes": 2063,
+    "comments": 3,
+    "shares": 1,
+    "unavailable": {
+      "views": "视频详情未展示播放量；达人主页作品列表加载失败，暂未取得播放量。"
+    }
+  }
+};
