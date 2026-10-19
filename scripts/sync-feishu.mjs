@@ -79,7 +79,12 @@ export async function request(endpoint,{token,body,fetchImpl=fetch}={}) {
     try {response=await fetchImpl(API+endpoint,{method:body?'POST':'GET',headers:{'Content-Type':'application/json; charset=utf-8',...(token?{Authorization:`Bearer ${token}`}:{})},...(body?{body:JSON.stringify(body)}:{}),signal:AbortSignal.timeout(30000),redirect:'error'});}
     catch {if(attempt===2)throw new Error('Feishu network request failed.');await new Promise(r=>setTimeout(r,1000*(attempt+1)));continue;}
     if((response.status===429||response.status>=500)&&attempt<2){await new Promise(r=>setTimeout(r,2000*(attempt+1)));continue;}
-    if(!response.ok)throw new Error(`Feishu HTTP ${response.status}; no deployment.`);
+    if(!response.ok){
+      let code='unavailable';
+      try {const error=await response.json();if(Number.isInteger(error.code))code=String(error.code);}catch{}
+      const operation=endpoint.includes('/auth/')?'authentication':endpoint.split('?')[0].split('/').at(-1);
+      throw new Error(`Feishu ${operation} HTTP ${response.status}, API code ${code}; no deployment.`);
+    }
     const json=await response.json();
     // Do not log raw API responses: they can contain private records or credentials.
     if(json.code!==0)throw new Error(`Feishu API code ${Number(json.code)}; check application and table read permissions.`);
@@ -115,6 +120,7 @@ export async function build() {
   const previous=context.window;
   const auth=await request('/auth/v3/tenant_access_token/internal',{body:{app_id:appId,app_secret:appSecret}});
   if(!auth.tenant_access_token)throw new Error('Feishu did not return an access token.');
+  console.log('Feishu authentication succeeded. Reading table schemas and records.');
   const [publishRaw,crmRaw]=await Promise.all([
     fetchTable(SOURCES.publish,PUBLISH_FIELDS,auth.tenant_access_token),
     fetchTable(SOURCES.crm,previous.ASTRA_CRM.headers.filter(h=>!OMITTED_CRM_FIELDS.includes(h)),auth.tenant_access_token)
