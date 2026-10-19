@@ -19,7 +19,7 @@ GitHub Pages 看板：[打开网站](https://yueee315.github.io/Kol-/)。
 
 ## 数据说明
 
-数据快照日期为 **2026-10-19**，未接入飞书自动同步。
+网站每日北京时间 **12:00** 自动读取飞书发布表与达人资产表，校验成功后部署。线上数据以页面“最近同步”时间为准；仓库内手动基线日期为 **2026-10-19**。
 
 - `data.js`：Astra-agency 的 8 位 KOL 及合作、排期、脚本和发布信息。
 - `crm-data.js`：达人资产库全部 47 位达人的资料；其中 6 位关联现有发布表。Pro AE、Sorin 仅见于发布表，合并展示后共 49 位。
@@ -52,13 +52,13 @@ python3 -m http.server 4173 --bind 127.0.0.1
 
 ## GitHub Pages
 
-已启用 GitHub Pages，发布来源为 `main` 分支的 `/ (root)`，强制使用 HTTPS。
+已启用 GitHub Pages，发布来源为 **GitHub Actions**，强制使用 HTTPS。
 
-向 `main` 提交更新后，GitHub 会自动重新部署至 https://yueee315.github.io/Kol-/ 。这只更新仓库中的静态网站，不会自动读取飞书最新数据。
+每日定时任务、手动运行工作流或向 `main` 提交网站相关代码时，会读取飞书最新数据，校验后部署至 https://yueee315.github.io/Kol-/ 。失败时保留最近成功版本。
 
 ## 更新数据
 
-编辑 `data.js` 与 `crm-data.js` 后，应同步提供 `ASTRA_SYNC` 快照日期，并核对概览数字与源数据一致。概览已改为根据快照数据动态计算。
+日常数据请直接更新飞书原表，等待下一次每日同步，或在 Actions 中手动运行 **Sync Feishu and deploy Pages**。自动快照发布到 Pages，不回写仓库基线文件；概览根据每次快照动态计算。
 
 只运行语法检查即可检查 JavaScript 解析：
 
@@ -84,4 +84,4 @@ node --check crm-data.js
 
 ## 自动同步接入
 
-已准备飞书 API 读取、数据校验、动态统计和每日北京时间 12:00 的 GitHub Actions 工作流。首次启用需配置应用凭证和表格读取权限，手动验证成功后再打开定时开关；准备代码不代表同步已经启用。具体步骤见 [AUTO_SYNC.md](AUTO_SYNC.md)。
+2026-10-19 已完成飞书应用只读授权及实际读取验证（8 条发布记录、47 条 CRM 记录），并开启每日北京时间 12:00 自动同步开关。首次 GitHub Pages 发布仍待完成，暂不能视为上线验证通过；请以 Actions 结果及网站“最近同步”时间为准。同步范围、开关和维护方法见 [AUTO_SYNC.md](AUTO_SYNC.md)。
