@@ -22,7 +22,7 @@ export function text(value) {
     if(value.link!=null)return text(value.link);
     if(value.record_ids)return '关联项目请查看飞书原表';
   }
-  throw new Error('Unsupported Feishu field shape; deployment stopped.');
+  throw new Error(`Unsupported Feishu field shape (keys: ${Object.keys(value).sort().join(',')}); deployment stopped.`);
 }
 function labels(value) {return (Array.isArray(value)?value:[value]).map(text).filter(Boolean);}
 export function safeURL(value) {
