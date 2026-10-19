@@ -17,6 +17,7 @@ export function text(value) {
   if(Array.isArray(value))return value.map(text).filter(Boolean).join('');
   if(typeof value==='object') {
     if(value.text!=null)return text(value.text);
+    if(Array.isArray(value.text_arr))return value.text_arr.map(text).filter(Boolean).join(' / ');
     if(value.name!=null)return text(value.name);
     if(value.value!=null)return text(value.value);
     if(value.link!=null)return text(value.link);
