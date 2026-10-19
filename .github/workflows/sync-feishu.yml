@@ -1,0 +1,48 @@
+name: Sync Feishu and deploy Pages
+on:
+  schedule:
+    # UTC 04:00 = Asia/Shanghai 12:00. GitHub may delay scheduled runs.
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['index.html', 'app.js', 'styles.css', 'data.js', 'crm-data.js', 'scripts/**', '.github/workflows/sync-feishu.yml']
+permissions:
+  contents: read
+concurrency:
+  group: feishu-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    # Enable scheduled deployments only after the first successful manual validation.
+    if: github.event_name == 'workflow_dispatch' || vars.FEISHU_SYNC_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify transformations and failure handling
+        run: node --test scripts/sync-feishu.test.mjs
+      - name: Read Feishu and build public site
+        env:
+          FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
+          FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
+        run: node scripts/sync-feishu.mjs
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
