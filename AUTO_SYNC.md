@@ -1,6 +1,6 @@
 # 飞书自动同步接入
 
-当前准备：每日北京时间 12:00（UTC 04:00）由 GitHub Actions 读取两张指定飞书视图，校验后部署 GitHub Pages。首次接入前定时发布关闭，线上继续保留手动快照。
+2026-10-19 已完成实际读取验证（8 条发布记录、47 条 CRM 记录），应用“祝越的智能助手”已获两份文档只读权限。每日北京时间 12:00（UTC 04:00）同步开关已开启；首次 GitHub Pages 部署仍在等待，尚未完成上线验证。GitHub Actions 校验成功后才会部署，网站在新部署成功前继续保留旧版本。
 
 ## 一次性配置
 
@@ -11,7 +11,7 @@
    不要放入聊天、公开源码、Actions variables 或网页 JavaScript。
 3. 仓库 Settings → Pages → Build and deployment → Source 改为 **GitHub Actions**。
 4. Actions → **Sync Feishu and deploy Pages** → Run workflow，验证读取、部署成功，并在网站核对人数、脚本链接、排期和最近同步时间。
-5. 首次验证通过后，在 Settings → Secrets and variables → Actions → Variables 添加 `FEISHU_SYNC_ENABLED`，值为 `true`，启用每日定时任务及代码更新后的重新部署。
+5. 在 Settings → Secrets and variables → Actions → Variables 配置 `FEISHU_SYNC_ENABLED=true` 可启用每日定时任务及代码更新后的重新部署。当前开关已启用；首次上线仍需核对部署结果。
 
 ## 同步范围
 
