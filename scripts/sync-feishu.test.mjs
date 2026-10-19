@@ -56,3 +56,11 @@ test('build creates only public website files after both sources validate',async
   assert.ok(!crm.includes('DO_NOT_PUBLISH'));assert.ok(!data.includes('TEST_SECRET'));assert.ok(data.includes('ASTRA_SYNC'));assert.ok(data.includes('2026-10-16'));
  }finally{await rm(temp,{recursive:true,force:true});}
 });
+
+
+test('reads linked project names returned as text_arr without publishing table ids',()=>{
+ const headers=['达人名称/ID','Campaign 合作追踪（项目进度表）'];
+ const result=normalizeCRM([row({'达人名称/ID':'a',[headers[1]]:[{table_id:'PRIVATE_TABLE_ID',text_arr:['a - Astra','a - Follow-up'],type:'text'}]})],headers);
+ assert.equal(result.records.a[headers[1]],'a - Astra / a - Follow-up');
+ assert.ok(!JSON.stringify(result).includes('PRIVATE_TABLE_ID'));
+});
